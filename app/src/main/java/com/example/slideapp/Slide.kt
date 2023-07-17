@@ -1,6 +1,6 @@
 package com.example.slideapp
 
-class Square(
+class Slide(
     val id: String,
     var side: Int,
     var r: Int,
