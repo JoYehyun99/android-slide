@@ -15,6 +15,8 @@ class SlideViewModel : ViewModel() {
         }
     }
     val slide: LiveData<Slide> = _slide
+    private val _isSelected: MutableLiveData<Boolean> = MutableLiveData(false)
+    val isSelected: LiveData<Boolean> = _isSelected
 
     fun changeBackgroundColor() {
         _slide.value = slideManager.changeBackgroundColor(nowSlideNum)
@@ -30,6 +32,10 @@ class SlideViewModel : ViewModel() {
         if (slideManager.changeOpacity(nowSlideNum, -1)) {
             _slide.value = slideManager.getSlide(nowSlideNum)
         }
+    }
+
+    fun setSelected(selected: Boolean) {
+        _isSelected.value = selected
     }
 
 

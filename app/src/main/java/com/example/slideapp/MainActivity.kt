@@ -21,13 +21,21 @@ class MainActivity : AppCompatActivity() {
             binding.etAlphaNum.setText(it.color.alpha.toString())
         }
 
+        model.isSelected.observe(this) {
+            binding.btnBackgroundColor.isEnabled = it
+            binding.btnAlphaMinus.isEnabled = it
+            binding.btnAlphaPlus.isEnabled = it
+        }
+
         binding.ivSquare.setOnTouchListener { _, _ ->
             binding.ivSquare.setImageResource(R.drawable.shape_borderline)
+            model.setSelected(true)
             true
         }
 
         binding.vSlide.setOnClickListener {
             binding.ivSquare.setImageResource(0)
+            model.setSelected(false)
         }
 
         binding.btnBackgroundColor.setOnClickListener {
