@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
 
         val model: SlideViewModel = ViewModelProvider(this@MainActivity)[SlideViewModel::class.java]
 
-        model.squareColor.observe(this){
+        model.squareColor.observe(this) {
             val changedColor = Color.parseColor(it.toHexColor())
             binding.ivSquare.setBackgroundColor(changedColor)
             binding.btnBackgroundColor.setBackgroundColor(changedColor)

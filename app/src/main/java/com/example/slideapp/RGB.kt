@@ -7,9 +7,9 @@ data class RGB(
 ) {
     val RADIX = 16
     fun toHexColor(): String {
-        val hexR = r.toString(RADIX).padStart(2,'0')
-        val hexG = g.toString(RADIX).padStart(2,'0')
-        val hexB = b.toString(RADIX).padStart(2,'0')
+        val hexR = r.toString(RADIX).padStart(2, '0')
+        val hexG = g.toString(RADIX).padStart(2, '0')
+        val hexB = b.toString(RADIX).padStart(2, '0')
         return "#$hexR$hexG$hexB"
     }
 }
