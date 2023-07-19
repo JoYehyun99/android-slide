@@ -14,11 +14,11 @@ class MainActivity : AppCompatActivity() {
 
         val model: SlideViewModel = ViewModelProvider(this@MainActivity)[SlideViewModel::class.java]
 
-        model.squareColor.observe(this) {
-            binding.ivSquare.setBackgroundColor(Color.parseColor(it.getHexColor()))
-            binding.btnBackgroundColor.setBackgroundColor(Color.parseColor(it.getHexColorForBtn()))
-            binding.btnBackgroundColor.text = it.getHexColorForBtn()
-            binding.etAlphaNum.setText(it.alpha.toString())
+        model.slide.observe(this) {
+            binding.ivSquare.setBackgroundColor(Color.parseColor(it.color.getHexColor()))
+            binding.btnBackgroundColor.setBackgroundColor(Color.parseColor(it.color.getHexColorForBtn()))
+            binding.btnBackgroundColor.text = it.color.getHexColorForBtn()
+            binding.etAlphaNum.setText(it.color.alpha.toString())
         }
 
         binding.ivSquare.setOnTouchListener { _, _ ->
@@ -33,6 +33,7 @@ class MainActivity : AppCompatActivity() {
         binding.btnBackgroundColor.setOnClickListener {
             model.changeBackgroundColor()
         }
+
         binding.btnAlphaMinus.setOnClickListener {
             model.removeOpacity()
         }
