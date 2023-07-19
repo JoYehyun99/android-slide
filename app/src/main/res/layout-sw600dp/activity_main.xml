@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/whole_bgr">
@@ -72,11 +73,14 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:text="Button"
+        android:textAllCaps="true"
+        android:textColor="@color/black"
+        android:textSize="24sp"
         app:cornerRadius="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/gl_right"
-        app:layout_constraintTop_toBottomOf="@id/tv_background_color" />
+        app:layout_constraintTop_toBottomOf="@id/tv_background_color"
+        tools:text="color" />
 
     <TextView
         android:id="@+id/tv_alpha"
@@ -98,7 +102,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/edittext_round_rectangle"
+        android:background="@drawable/shape_round_rectangle"
         android:ems="4"
         android:inputType="number"
         android:padding="12dp"
@@ -128,8 +132,8 @@
         android:layout_marginEnd="16dp"
         android:backgroundTint="@color/btn_bgr"
         app:layout_constraintBottom_toBottomOf="@id/et_alpha_num"
-        app:layout_constraintStart_toEndOf="@id/btn_alpha_minus"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btn_alpha_minus"
         app:layout_constraintTop_toTopOf="@id/et_alpha_num"
         app:srcCompat="@drawable/baseline_add_24" />
 
@@ -137,13 +141,11 @@
         android:id="@+id/iv_square"
         android:layout_width="150dp"
         android:layout_height="150dp"
+        android:background="@color/btn_bgr"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/gl_right"
         app:layout_constraintStart_toStartOf="@+id/gl_left"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/whole_bgr"
-        android:src="@drawable/border_line"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

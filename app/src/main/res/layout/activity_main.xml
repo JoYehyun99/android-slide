@@ -1,18 +1,146 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:background="@color/whole_bgr">
 
-    <TextView
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl_left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.17" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.83" />
+
+    <View
+        android:id="@+id/v_left"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/side_bgr"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/gl_left"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/v_right"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/side_bgr"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/gl_right"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <View
+        android:id="@+id/v_slide"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="4:3"
+        app:layout_constraintEnd_toStartOf="@id/gl_right"
+        app:layout_constraintStart_toStartOf="@id/gl_left"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_background_color"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="배경색"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/gl_right"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_background_color"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        app:cornerRadius="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/gl_right"
+        app:layout_constraintTop_toBottomOf="@id/tv_background_color" />
+
+    <TextView
+        android:id="@+id/tv_alpha"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="투명도"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/gl_right"
+        app:layout_constraintTop_toBottomOf="@id/btn_background_color" />
+
+    <EditText
+        android:id="@+id/et_alpha_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/shape_round_rectangle"
+        android:ems="4"
+        android:inputType="number"
+        android:padding="12dp"
+        android:text="10"
+        android:textAlignment="viewEnd"
+        app:layout_constraintStart_toStartOf="@id/gl_right"
+        app:layout_constraintTop_toBottomOf="@id/tv_alpha" />
+
+
+    <ImageButton
+        android:id="@+id/btn_alpha_minus"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:backgroundTint="@color/btn_bgr"
+        app:layout_constraintBottom_toBottomOf="@id/et_alpha_num"
+        app:layout_constraintEnd_toStartOf="@id/btn_alpha_plus"
+        app:layout_constraintStart_toEndOf="@+id/et_alpha_num"
+        app:layout_constraintTop_toTopOf="@id/et_alpha_num"
+        app:srcCompat="@drawable/baseline_remove_24" />
+
+
+    <ImageButton
+        android:id="@+id/btn_alpha_plus"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="@color/btn_bgr"
+        app:layout_constraintBottom_toBottomOf="@id/et_alpha_num"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btn_alpha_minus"
+        app:layout_constraintTop_toTopOf="@id/et_alpha_num"
+        app:srcCompat="@drawable/baseline_add_24" />
+
+    <ImageView
+        android:id="@+id/iv_square"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:background="@color/btn_bgr"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/gl_right"
+        app:layout_constraintStart_toStartOf="@+id/gl_left"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

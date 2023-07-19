@@ -1,18 +1,43 @@
 package com.example.slideapp
 
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import androidx.lifecycle.ViewModelProvider
+import com.example.slideapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        val binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        val squareFactory = SquareSlideFactory()
-        Log.d("square_slide","Rect1 ${squareFactory.createSlide(216,245,0,245,9)}")
-        Log.d("square_slide","Rect2 ${squareFactory.createSlide(384,43,124,95,5)}")
-        Log.d("square_slide","Rect3 ${squareFactory.createSlide(108,98,244,15,7)}")
-        Log.d("square_slide","Rect4 ${squareFactory.createSlide(233,125,39,99,1)}")
+        val model: SlideViewModel = ViewModelProvider(this@MainActivity)[SlideViewModel::class.java]
+
+        model.squareColor.observe(this){
+            val changedColor = Color.parseColor(it.toHexColor())
+            binding.ivSquare.setBackgroundColor(changedColor)
+            binding.btnBackgroundColor.setBackgroundColor(changedColor)
+            binding.btnBackgroundColor.text = it.toHexColor()
+        }
+
+        binding.ivSquare.setOnTouchListener { _, _ ->
+            binding.ivSquare.setImageResource(R.drawable.shape_borderline)
+            true
+        }
+
+        binding.vSlide.setOnClickListener {
+            binding.ivSquare.setImageResource(0)
+        }
+
+        binding.btnBackgroundColor.setOnClickListener {
+            model.changeBackgroundColor()
+        }
+        binding.btnAlphaMinus.setOnClickListener {
+
+        }
+        binding.btnAlphaPlus.setOnClickListener {
+
+        }
     }
 }
