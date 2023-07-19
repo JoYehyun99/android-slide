@@ -16,8 +16,6 @@ Android 학습 프로젝트 #2
 <img width="509" alt="3-1" src="https://github.com/JoYehyun99/android-slide/assets/81362348/929d0a6f-b514-4987-a26f-5b80cf9b92d3">
 
 
-
-
 > ## Task 2
 
 #### `SlideManager` 구현
