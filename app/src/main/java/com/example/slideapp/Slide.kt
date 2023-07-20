@@ -1,12 +1,10 @@
 package com.example.slideapp
 
-class Slide(
+data class Slide(
     val id: String,
     var side: Int,
-    var r: Int,
-    var g: Int,
-    var b: Int,
-    var alpha: Int
+    var color: ARGB
 ) {
-    override fun toString(): String = "($id), Side:$side, R:$r, G:$g, B:$b, Alpha: $alpha"
+    override fun toString(): String =
+        "($id), Side:$side, R:${color.r}, G:${color.g}, B:${color.b}, Alpha: ${color.alpha}"
 }
