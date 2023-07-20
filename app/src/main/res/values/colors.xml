@@ -4,5 +4,9 @@
     <color name="white">#FFFFFFFF</color>
     <color name="whole_bgr">#AFAEB1</color>
     <color name="side_bgr">#E6E6EA</color>
-    <color name="btn_bgr">#CDCCCF</color>
+    <color name="alpha_btn_bgr">#CDCCCF</color>
+    <color name="add_btn_bgr">#CADBF5</color>
+    <color name="add_btn_txt">#397CF6</color>
+    <color name="img_bgr">#E5E5E5</color>
+    <color name="img_item_bgr">#929292</color>
 </resources>
