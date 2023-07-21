@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity(), OnSlideItemTouchListener {
         binding.rvLeft.addItemDecoration(SlideItemDecoration())
         itemTouchHelper.attachToRecyclerView(binding.rvLeft)
         observeData()
-
+        
         binding.ivSquare.setOnTouchListener { _, _ ->
             binding.ivSquare.setImageResource(R.drawable.shape_borderline)
             model.setSelected(true)
