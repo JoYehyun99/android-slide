@@ -1,10 +1,9 @@
 package com.example.slideapp
 
-class SquareSlideFactory() : SlideItemFactory {
-
+class ImageSlideFactory(): SlideItemFactory {
     override val check: MutableSet<String> = mutableSetOf()
     override fun createSlide(side: Int, color: ARGB): Slide {
-        return Slide.SquareSlide(getRandomId(), side, color)
+        return Slide.ImageSlide(getRandomId(),side,color,null)
     }
 
     override fun getRandomId(): String {
