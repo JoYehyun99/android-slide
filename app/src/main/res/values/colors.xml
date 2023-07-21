@@ -9,4 +9,5 @@
     <color name="add_btn_txt">#397CF6</color>
     <color name="img_bgr">#E5E5E5</color>
     <color name="img_item_bgr">#929292</color>
+    <color name="selected_bgr">#FA5B5B</color>
 </resources>

@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class SlideViewModel : ViewModel() {
+class SlideViewModel() : ViewModel() {
 
     private val slideManager = SlideManager()
-    private val nowSlideNum = 0
+    private var nowSlideNum = 0
 
     private val _slide: MutableLiveData<Slide> by lazy {
         MutableLiveData<Slide>().apply {
@@ -17,6 +17,10 @@ class SlideViewModel : ViewModel() {
     val slide: LiveData<Slide> = _slide
     private val _isSelected: MutableLiveData<Boolean> = MutableLiveData(false)
     val isSelected: LiveData<Boolean> = _isSelected
+    private val _slideList: MutableLiveData<List<Slide>> by lazy {
+        MutableLiveData<List<Slide>>(slideManager.getSlideList())
+    }
+    val slideList: LiveData<List<Slide>> = _slideList
 
     fun changeBackgroundColor() {
         _slide.value = slideManager.changeBackgroundColor(nowSlideNum)
@@ -38,5 +42,24 @@ class SlideViewModel : ViewModel() {
         _isSelected.value = selected
     }
 
+    fun updateSlideList() {
+        _slideList.value = slideManager.getSlideList()
+    }
 
+    fun addNewSlide() {
+        val newSlide = slideManager.addSlide()
+        updateSlideList()
+        _slide.value = newSlide
+
+    }
+
+    fun switchTurn(position: Int) {
+        val newTurn = slideManager.getSlide(position)
+        _slide.value = newTurn
+    }
+
+    fun changeOrder(from: Int, to: Int) {
+        val newOrder = slideManager.changeSlideOrder(from, to)
+        _slideList.value = newOrder
+    }
 }
