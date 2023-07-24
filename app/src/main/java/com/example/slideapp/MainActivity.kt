@@ -3,7 +3,6 @@ package com.example.slideapp
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -77,7 +76,6 @@ class MainActivity : AppCompatActivity(), OnSlideItemTouchListener {
     }
 
     override fun showSlide(slide: Slide, position: Int): Boolean {
-        Log.d("slide", "select $position")
         model.switchTurn(position)
         return true
     }
