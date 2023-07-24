@@ -24,6 +24,7 @@ class SlideViewModel() : ViewModel() {
 
     fun changeBackgroundColor() {
         _slide.value = slideManager.changeBackgroundColor(nowSlideNum)
+        _slideList.value = slideManager.getSlideList()
     }
 
     fun addOpacity() {
@@ -55,6 +56,7 @@ class SlideViewModel() : ViewModel() {
 
     fun switchTurn(position: Int) {
         val newTurn = slideManager.getSlide(position)
+        nowSlideNum = position
         _slide.value = newTurn
     }
 
