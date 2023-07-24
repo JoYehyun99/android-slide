@@ -43,7 +43,7 @@ class SlideViewModel() : ViewModel() {
         _isSelected.value = selected
     }
 
-    fun updateSlideList() {
+    private fun updateSlideList() {
         _slideList.value = slideManager.getSlideList()
     }
 
@@ -51,7 +51,6 @@ class SlideViewModel() : ViewModel() {
         val newSlide = slideManager.addSlide()
         updateSlideList()
         _slide.value = newSlide
-
     }
 
     fun switchTurn(position: Int) {
@@ -63,5 +62,13 @@ class SlideViewModel() : ViewModel() {
     fun changeOrder(from: Int, to: Int) {
         val newOrder = slideManager.changeSlideOrder(from, to)
         _slideList.value = newOrder
+    }
+
+    fun changeImage(imageUri: ByteArray) {
+        val newImage = slideManager.changeImage(nowSlideNum, imageUri)
+        if (newImage != null) {
+            updateSlideList()
+            _slide.value = newImage
+        }
     }
 }

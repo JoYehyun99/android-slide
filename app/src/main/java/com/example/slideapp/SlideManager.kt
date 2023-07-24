@@ -42,31 +42,39 @@ class SlideManager {
                 slideList[idx]
             }
         }
+    }
 
+    private fun getNewOpacity(value: Int, mode: Int): Int{
+        if(mode == 1){  // add
+            if(value < 10)  return value + 1
+        } else {    // sub
+            if(value > 1) return value - 1
+        }
+        return value
     }
 
     fun changeOpacity(idx: Int, n: Int): Boolean {
-        val slideItem = slideList[idx] as Slide.SquareSlide
-        var newAlpha = slideItem.color.alpha
-
-        if (n == 1) {   // add
-            if (newAlpha < 10) {
-                newAlpha += 1
-                val newColor = slideItem.color.copy(alpha = newAlpha)
-                val newSlide = slideItem.copy(color = newColor)
-                slideList[idx] = newSlide
-                return true
+        when(val slideItem = slideList[idx]){
+            is Slide.SquareSlide -> {
+                val newAlpha = getNewOpacity(slideItem.color.alpha, n)
+                if(newAlpha != slideItem.color.alpha) {
+                    val newColor = slideItem.color.copy(alpha = newAlpha)
+                    val newSlide = slideItem.copy(color = newColor)
+                    slideList[idx] = newSlide
+                    return true
+                }
+                return false
             }
-            return false
-        } else {    // sub
-            if (newAlpha > 1) {
-                newAlpha -= 1
-                val newColor = slideItem.color.copy(alpha = newAlpha)
-                val newSlide = slideItem.copy(color = newColor)
-                slideList[idx] = newSlide
-                return true
+            is Slide.ImageSlide -> {
+                val newAlpha = getNewOpacity(slideItem.color.alpha, n)
+                if(newAlpha != slideItem.color.alpha) {
+                    val newColor = slideItem.color.copy(alpha = newAlpha)
+                    val newSlide = slideItem.copy(color = newColor)
+                    slideList[idx] = newSlide
+                    return true
+                }
+                return false
             }
-            return false
         }
     }
 
@@ -79,5 +87,16 @@ class SlideManager {
         slideList.removeAt(from)
         slideList.add(to, slideItem)
         return getSlideList()
+    }
+    fun changeImage(idx: Int, imageUri: ByteArray): Slide?{
+        val slideItem = slideList[idx]
+        if (slideItem is Slide.ImageSlide){
+            val newSlide = slideItem.copy(img = imageUri)
+            slideList[idx] = newSlide
+            return newSlide
+        } else {
+            return null
+        }
+
     }
 }
