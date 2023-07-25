@@ -13,9 +13,7 @@ class SlideManager {
     private val factories: List<SlideItemFactory> by lazy {
         listOf(squareFactory, imageFactory)
     }
-    private val links = listOf<String>("", "")
-    private val tmp = "image-slides.json" // 이미지 슬라이드 테스트용 - 임시
-
+    private val links = listOf<String>("image-slides.json", "square-only-slides.json")
     private val ALPHA_DEFAULT = 10
 
     fun addSlide(): Slide {
@@ -104,12 +102,10 @@ class SlideManager {
     }
 
     fun addSlideFromServer(vm: SlideViewModel) {
-        val slideData = SlideObject.getRetrofitService().getSlide(tmp)
-        Log.d("getData", "add slide from server")
+        val slideData = SlideObject.getRetrofitService().getSlide(links.random())
         slideData.enqueue(object : Callback<JsonData> {
             override fun onResponse(call: Call<JsonData>, response: Response<JsonData>) {
                 if (response.isSuccessful) {
-                    Log.d("getData", "${response.body()}")
                     val slides = response.body()!!.slides
                     slides.forEach { slide ->
                         when (slide.type) {
@@ -118,7 +114,7 @@ class SlideManager {
                                 val newSlide = squareFactory.createCustomSlide(
                                     slide.id,
                                     slide.size!!,
-                                    slide.alpha!!,
+                                    slide.alpha,
                                     RGB(color.R, color.G, color.B)
                                 )
                                 slideList.add(newSlide)
