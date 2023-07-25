@@ -1,10 +1,10 @@
 package com.example.slideapp
 
 data class ARGB(
-    var r: Int,
-    var g: Int,
-    var b: Int,
-    var alpha: Int
+    val r: Int,
+    val g: Int,
+    val b: Int,
+    val alpha: Int
 ) {
     val RADIX = 16
     fun getHexColor(): String {

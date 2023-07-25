@@ -3,28 +3,35 @@ package com.example.slideapp
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.slideapp.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), OnSlideItemTouchListener {
+
+    private lateinit var model: SlideViewModel
+    private val binding by lazy {
+        ActivityMainBinding.inflate(layoutInflater)
+    }
+    private val slideAdapter by lazy {
+        SlideListAdapter(model, this@MainActivity)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        model = ViewModelProvider(this)[SlideViewModel::class.java]
+        val itemTouchHelper = ItemTouchHelper(ItemTouchCallback(slideAdapter))
 
-        val model: SlideViewModel = ViewModelProvider(this@MainActivity)[SlideViewModel::class.java]
-
-        model.slide.observe(this) {
-            binding.ivSquare.setBackgroundColor(Color.parseColor(it.color.getHexColor()))
-            binding.btnBackgroundColor.setBackgroundColor(Color.parseColor(it.color.getHexColorForBtn()))
-            binding.btnBackgroundColor.text = it.color.getHexColorForBtn()
-            binding.etAlphaNum.setText(it.color.alpha.toString())
-        }
-        model.isSelected.observe(this) {
-            binding.btnBackgroundColor.isEnabled = it
-            binding.btnAlphaMinus.isEnabled = it
-            binding.btnAlphaPlus.isEnabled = it
-        }
+        binding.rvLeft.adapter = slideAdapter
+        binding.rvLeft.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.rvLeft.addItemDecoration(SlideItemDecoration())
+        itemTouchHelper.attachToRecyclerView(binding.rvLeft)
+        observeData()
+        
         binding.ivSquare.setOnTouchListener { _, _ ->
             binding.ivSquare.setImageResource(R.drawable.shape_borderline)
             model.setSelected(true)
@@ -43,5 +50,35 @@ class MainActivity : AppCompatActivity() {
         binding.btnAlphaPlus.setOnClickListener {
             model.addOpacity()
         }
+        binding.btnSlidePlus.setOnClickListener {
+            model.addNewSlide()
+        }
+    }
+
+    private fun observeData() {
+
+        model.slide.observe(this) { slide ->
+            binding.ivSquare.setBackgroundColor(Color.parseColor(slide.color.getHexColor()))
+            binding.btnBackgroundColor.setBackgroundColor(Color.parseColor(slide.color.getHexColorForBtn()))
+            binding.btnBackgroundColor.text = slide.color.getHexColorForBtn()
+            binding.etAlphaNum.setText(slide.color.alpha.toString())
+            slideAdapter.setNowSlide(slide)
+        }
+
+        model.isSelected.observe(this) {
+            binding.btnBackgroundColor.isEnabled = it
+            binding.btnAlphaMinus.isEnabled = it
+            binding.btnAlphaPlus.isEnabled = it
+        }
+
+        model.slideList.observe(this) { slideList ->
+            slideAdapter.setSlideList(slideList)
+        }
+    }
+
+    override fun showSlide(slide: Slide, position: Int): Boolean {
+        Log.d("slide", "select $position")
+        model.switchTurn(position)
+        return true
     }
 }

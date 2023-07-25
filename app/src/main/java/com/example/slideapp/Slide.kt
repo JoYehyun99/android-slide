@@ -1,10 +1,20 @@
 package com.example.slideapp
 
-data class Slide(
-    val id: String,
-    var side: Int,
-    var color: ARGB
+sealed class Slide(
+    open val id: String,
+    open val side: Int,
+    open val color: ARGB
 ) {
-    override fun toString(): String =
-        "($id), Side:$side, R:${color.r}, G:${color.g}, B:${color.b}, Alpha: ${color.alpha}"
+    data class SquareSlide(
+        override val id: String,
+        override val side: Int,
+        override val color: ARGB
+    ) : Slide(id, side, color)
+
+    data class ImageSlide(
+        override val id: String,
+        override val side: Int,
+        override val color: ARGB,
+        val img: String?
+    ) : Slide(id, side, color)
 }

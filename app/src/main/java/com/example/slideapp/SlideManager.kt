@@ -4,9 +4,7 @@ import kotlin.random.Random
 
 class SlideManager {
 
-    private val wholeSlides: MutableList<Slide> by lazy {
-        mutableListOf<Slide>()
-    }
+    private val slideList: MutableList<Slide> = mutableListOf()
     private val SIZE = 100  // 임시 사이즈
 
     private fun getRandomColor(alpha: Int): ARGB {
@@ -14,38 +12,60 @@ class SlideManager {
     }
 
     fun addSlide(): Slide {
+        // todo 3 -5 : 정사각형 슬라이드 혹은 이미지 슬라이드 중 랜덤으로 생성
         val squareFactory = SquareSlideFactory()
-        wholeSlides.add(squareFactory.createSlide(SIZE, getRandomColor(10)))
-        return wholeSlides.last()
+        slideList.add(squareFactory.createSlide(SIZE, getRandomColor(10)))
+        return slideList.last()
     }
 
     fun countTotalSlides(): Int {
-        return wholeSlides.size
+        return slideList.size
     }
 
     fun getSlide(idx: Int): Slide {
-        return wholeSlides[idx]
+        return slideList[idx]
     }
 
     fun changeBackgroundColor(idx: Int): Slide {
-        wholeSlides[idx].color = getRandomColor(wholeSlides[idx].color.alpha)
-        return wholeSlides[idx]
+        val slideItem = slideList[idx] as Slide.SquareSlide
+        val newSlide = slideItem.copy(color = getRandomColor(slideList[idx].color.alpha))
+        slideList[idx] = newSlide
+        return newSlide
     }
 
     fun changeOpacity(idx: Int, n: Int): Boolean {
-        if (n == 1) {
-            if (wholeSlides[idx].color.alpha < 10) {
-                wholeSlides[idx].color.alpha += 1
+        val slideItem = slideList[idx] as Slide.SquareSlide
+        var newAlpha = slideItem.color.alpha
+
+        if (n == 1) {   // add
+            if (newAlpha < 10) {
+                newAlpha += 1
+                val newColor = slideItem.color.copy(alpha = newAlpha)
+                val newSlide = slideItem.copy(color = newColor)
+                slideList[idx] = newSlide
                 return true
             }
             return false
-        } else {
-            if (wholeSlides[idx].color.alpha > 1) {
-                wholeSlides[idx].color.alpha -= 1
+        } else {    // sub
+            if (newAlpha > 1) {
+                newAlpha -= 1
+                val newColor = slideItem.color.copy(alpha = newAlpha)
+                val newSlide = slideItem.copy(color = newColor)
+                slideList[idx] = newSlide
                 return true
             }
             return false
         }
     }
 
+    fun getSlideList(): List<Slide> {
+        return slideList.toList()
+    }
+
+    fun changeSlideOrder(from: Int, to: Int): List<Slide> {
+        val slideItem = slideList[from]
+        slideList.removeAt(from)
+        slideList.add(to, slideItem)
+        return getSlideList()
+    }
 }

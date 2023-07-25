@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/whole_bgr">
@@ -19,12 +20,12 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.83" />
 
-    <View
-        android:id="@+id/v_left"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_left"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/side_bgr"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btn_slide_plus"
         app:layout_constraintEnd_toStartOf="@id/gl_left"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -58,7 +59,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:text="배경색"
+        android:text="@string/bgr_title"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -72,10 +73,14 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
+        android:textAllCaps="true"
+        android:textColor="@color/black"
+        android:textSize="24sp"
         app:cornerRadius="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/gl_right"
-        app:layout_constraintTop_toBottomOf="@id/tv_background_color" />
+        app:layout_constraintTop_toBottomOf="@id/tv_background_color"
+        tools:text="color" />
 
     <TextView
         android:id="@+id/tv_alpha"
@@ -84,7 +89,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:text="투명도"
+        android:text="@string/opacity_title"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -112,7 +117,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:backgroundTint="@color/btn_bgr"
+        android:backgroundTint="@color/alpha_btn_bgr"
         app:layout_constraintBottom_toBottomOf="@id/et_alpha_num"
         app:layout_constraintEnd_toStartOf="@id/btn_alpha_plus"
         app:layout_constraintStart_toEndOf="@+id/et_alpha_num"
@@ -125,7 +130,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:backgroundTint="@color/btn_bgr"
+        android:backgroundTint="@color/alpha_btn_bgr"
         app:layout_constraintBottom_toBottomOf="@id/et_alpha_num"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/btn_alpha_minus"
@@ -136,11 +141,25 @@
         android:id="@+id/iv_square"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:background="@color/btn_bgr"
+        android:background="@color/alpha_btn_bgr"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/gl_right"
         app:layout_constraintStart_toStartOf="@+id/gl_left"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_slide_plus"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/add_btn_bgr"
+        android:text="@string/plus_btn"
+        android:padding="15dp"
+        android:textColor="@color/add_btn_txt"
+        android:textSize="20sp"
+        app:cornerRadius="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/gl_left"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,7 +13,7 @@ Android 학습 프로젝트 #2
 - `getRandomId` 랜덤 ID 값 생성
 
 #### 결과 화면
-<img width="509" alt="3-1" src="https://github.com/JoYehyun99/android-slide/assets/81362348/929d0a6f-b514-4987-a26f-5b80cf9b92d3">
+<img width="509" alt="3-1" src="https://github.com/JoYehyun99/android-slide/assets/81362348/929d0a6f-b514-4987-a26f-5b80cf9b92d3">   
 
 
 > ## Task 2
@@ -40,4 +40,27 @@ Android 학습 프로젝트 #2
 
 #### 결과 화면
 
-<img width="899" alt="1" src="https://github.com/JoYehyun99/android-slide/assets/81362348/e7b52c8b-4962-4e7f-9ea4-12d0925a42b5"> <img width="898" alt="2" src="https://github.com/JoYehyun99/android-slide/assets/81362348/23715671-0c2a-41c7-b31d-d52b86ac958d"> <img width="901" alt="3" src="https://github.com/JoYehyun99/android-slide/assets/81362348/4cfa173f-b3ec-476a-8703-a3da6544f6e4">
+<img width="899" alt="1" src="https://github.com/JoYehyun99/android-slide/assets/81362348/e7b52c8b-4962-4e7f-9ea4-12d0925a42b5"> <img width="898" alt="2" src="https://github.com/JoYehyun99/android-slide/assets/81362348/23715671-0c2a-41c7-b31d-d52b86ac958d"> <img width="901" alt="3" src="https://github.com/JoYehyun99/android-slide/assets/81362348/4cfa173f-b3ec-476a-8703-a3da6544f6e4">   
+
+
+
+
+> ## Task 3
+
+#### `Slide` 객체 수정
+- sealed class 사용
+- 정사각형 슬라이드 / 이미지 슬라이드 구분해서 구현
+
+
+#### 슬라이드 목록 구현
+- RecyclerView 사용
+- 추가 버튼을 누르면 slide list에 데이터 추가할 수 있도록 구현
+- 현재 클릭된 슬라이드 아이템의 배경색 변경
+- `ItemTouchHelper.Callback()` 을 활용해 드래그로 순서 변경 기능 구현
+
+
+#### 수정 사항
+`wholeSlides` -> `slideList` 이름 변경  
+data class 변수 선언 -> `val` 사용
+
+<img width="809" alt="dragSlide" src="https://github.com/JoYehyun99/android-slide/assets/81362348/5ed87463-b195-494c-8790-3b2e11ec56ee">
