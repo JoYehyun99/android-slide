@@ -1,5 +1,10 @@
 package com.example.slideapp
 
+import android.util.Log
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+
 class SlideManager {
 
     private val slideList: MutableList<Slide> = mutableListOf()
@@ -7,12 +12,14 @@ class SlideManager {
     private val factories: List<SlideItemFactory> by lazy {
         listOf(squareFactory, ImageSlideFactory())
     }
-    private val SIZE = 100  // 임시 사이즈
+    private val links = listOf<String>("", "")
+    private val tmp = "square-only-slides.json" // 정사각형 슬라이드 테스트용 - 임시
+
     private val ALPHA_DEFAULT = 10
 
     fun addSlide(): Slide {
         val randomFactory = factories.random()
-        val newSlide = randomFactory.createSlide(SIZE, ALPHA_DEFAULT)
+        val newSlide = randomFactory.createSlide(ALPHA_DEFAULT)
         slideList.add(newSlide)
         return newSlide
     }
@@ -93,6 +100,38 @@ class SlideManager {
         } else {
             return null
         }
+    }
 
+    fun addSlideFromServer(vm : SlideViewModel) {
+        val slideData = SlideObject.getRetrofitService().getSlide(tmp)
+        Log.d("getData", "add slide from server")
+        slideData.enqueue(object : Callback<JsonData> {
+            override fun onResponse(call: Call<JsonData>, response: Response<JsonData>) {
+                if (response.isSuccessful) {
+                    Log.d("getData", "${response.body()}")
+                    val slides = response.body()!!.slides
+                    slides.forEach { slide ->
+                        when(slide.type){
+                            "Square" -> {
+                                val color = slide.color!!
+                                val newSlide = squareFactory.createCustomSlide(slide.id, slide.size!!, slide.alpha!!, RGB(color.R, color.G, color.B))
+                                slideList.add(newSlide)
+                            }
+                            "Image" -> {
+
+                            }
+                        }
+                    }
+                } else {
+                    Log.d("getData", "no response")
+                }
+                vm.updateSlideList()
+            }
+
+            override fun onFailure(call: Call<JsonData>, t: Throwable) {
+                Log.d("getData", "response fail")
+            }
+
+        })
     }
 }

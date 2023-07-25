@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
+import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
@@ -98,6 +99,11 @@ class MainActivity : AppCompatActivity(), OnSlideItemTouchListener {
         }
         binding.btnSlidePlus.setOnClickListener {
             model.addNewSlide()
+        }
+        binding.btnSlidePlus.setOnLongClickListener {
+            model.addNewSlideFromServer()
+            Toast.makeText(this,"long click",Toast.LENGTH_SHORT).show()
+            true
         }
     }
 
