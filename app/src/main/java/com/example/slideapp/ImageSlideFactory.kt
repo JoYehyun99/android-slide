@@ -6,7 +6,8 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class ImageSlideFactory() : SlideItemFactory {
-    override val check: MutableSet<String> = mutableSetOf()
+
+    override val duplicationCheck: MutableSet<String> = mutableSetOf()
     override fun createSlide(alpha: Int): Slide {
         return ImageSlide(getRandomId(), alpha, null)
     }
@@ -14,10 +15,10 @@ class ImageSlideFactory() : SlideItemFactory {
     override fun getRandomId(): String {
         val charSet = ('a'..'z') + ('0'..'9')
         var result = (1..9).map { charSet.random() }.joinToString("").chunked(3).joinToString("-")
-        while (check.contains(result)) {
+        while (duplicationCheck.contains(result)) {
             result = (1..9).map { charSet.random() }.joinToString("").chunked(3).joinToString("-")
         }
-        check.add(result)
+        duplicationCheck.add(result)
         return result
     }
 

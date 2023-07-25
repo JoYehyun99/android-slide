@@ -4,7 +4,7 @@ import kotlin.random.Random
 
 class SquareSlideFactory() : SlideItemFactory {
 
-    override val check: MutableSet<String> = mutableSetOf()
+    override val duplicationCheck: MutableSet<String> = mutableSetOf()
     private val SIZE = 100  // 임시 사이즈
     override fun createSlide(alpha: Int): Slide {
         return SquareSlide(getRandomId(), alpha, SIZE, getRandomColor())
@@ -13,10 +13,10 @@ class SquareSlideFactory() : SlideItemFactory {
     override fun getRandomId(): String {
         val charSet = ('a'..'z') + ('0'..'9')
         var result = (1..9).map { charSet.random() }.joinToString("").chunked(3).joinToString("-")
-        while (check.contains(result)) {
+        while (duplicationCheck.contains(result)) {
             result = (1..9).map { charSet.random() }.joinToString("").chunked(3).joinToString("-")
         }
-        check.add(result)
+        duplicationCheck.add(result)
         return result
     }
 
