@@ -101,7 +101,7 @@ class SlideManager {
         }
     }
 
-    fun addSlideFromServer(vm: SlideViewModel) {
+    fun addSlideFromServer(callback: (Boolean) -> Unit) {
         val slideData = SlideObject.getRetrofitService().getSlide(links.random())
         slideData.enqueue(object : Callback<JsonData> {
             override fun onResponse(call: Call<JsonData>, response: Response<JsonData>) {
@@ -118,14 +118,17 @@ class SlideManager {
                                     RGB(color.R, color.G, color.B)
                                 )
                                 slideList.add(newSlide)
-                                vm.updateSlideList()
+                                callback(true)
                             }
 
                             "Image" -> {
                                 imageFactory.createCustomSlide(slide.id, slide.alpha, slide.url!!) { newSlide ->
                                     if(newSlide != null){
                                         slideList.add(newSlide)
-                                        vm.updateSlideList()
+                                        callback(true)
+                                    }
+                                    else {
+                                        callback(false)
                                     }
                                 }
                             }
@@ -133,6 +136,7 @@ class SlideManager {
                     }
                 } else {
                     Log.d("getData", "no response")
+                    callback(false)
                 }
             }
 
