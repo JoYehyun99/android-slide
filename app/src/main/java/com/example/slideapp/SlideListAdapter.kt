@@ -48,11 +48,11 @@ class SlideListAdapter(
 
         holder.idxText.text = (position + 1).toString()
         when (slideItem) {
-            is Slide.SquareSlide -> {
+            is SquareSlide -> {
                 holder.imgIcon.setImageResource(R.drawable.baseline_fit_screen_24)
             }
 
-            is Slide.ImageSlide -> {
+            is ImageSlide -> {
                 holder.imgIcon.setImageResource(R.drawable.baseline_photo_24)
             }
         }

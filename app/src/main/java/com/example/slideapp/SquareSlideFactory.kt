@@ -1,10 +1,12 @@
 package com.example.slideapp
 
+import kotlin.random.Random
+
 class SquareSlideFactory() : SlideItemFactory {
 
     override val check: MutableSet<String> = mutableSetOf()
-    override fun createSlide(side: Int, color: ARGB): Slide {
-        return Slide.SquareSlide(getRandomId(), side, color)
+    override fun createSlide(side: Int, alpha: Int): Slide {
+        return SquareSlide(getRandomId(), side, alpha,getRandomColor())
     }
 
     override fun getRandomId(): String {
@@ -15,5 +17,9 @@ class SquareSlideFactory() : SlideItemFactory {
         }
         check.add(result)
         return result
+    }
+
+    fun getRandomColor(): RGB {
+        return RGB(Random.nextInt(256), Random.nextInt(256), Random.nextInt(256))
     }
 }

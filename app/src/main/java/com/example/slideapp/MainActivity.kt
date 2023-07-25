@@ -105,7 +105,7 @@ class MainActivity : AppCompatActivity(), OnSlideItemTouchListener {
 
         model.slide.observe(this) { slide ->
             when (slide) {
-                is Slide.ImageSlide -> {
+                is ImageSlide -> {
                     binding.ivSquare.visibility = View.INVISIBLE
                     binding.ivImage.visibility = View.VISIBLE
                     binding.btnBackgroundColor.setBackgroundColor(resources.getColor(R.color.white))
@@ -115,19 +115,19 @@ class MainActivity : AppCompatActivity(), OnSlideItemTouchListener {
                     } else {
                         val byteArray = slide.img
                         Glide.with(this).load(byteArray).into(binding.ivImage)
-                        binding.ivImage.imageAlpha = slide.color.getAlphaInt()
+                        binding.ivImage.imageAlpha = slide.getAlphaInt()
                     }
                 }
 
-                is Slide.SquareSlide -> {
+                is SquareSlide -> {
                     binding.ivSquare.visibility = View.VISIBLE
                     binding.ivImage.visibility = View.INVISIBLE
-                    binding.ivSquare.setBackgroundColor(Color.parseColor(slide.color.getHexColor()))
-                    binding.btnBackgroundColor.setBackgroundColor(Color.parseColor(slide.color.getHexColorForBtn()))
-                    binding.btnBackgroundColor.text = slide.color.getHexColorForBtn()
+                    binding.ivSquare.setBackgroundColor(Color.parseColor(slide.getHexColor()))
+                    binding.btnBackgroundColor.setBackgroundColor(Color.parseColor(slide.color.getHexRGBColor()))
+                    binding.btnBackgroundColor.text = slide.color.getHexRGBColor()
                 }
             }
-            binding.etAlphaNum.setText(slide.color.alpha.toString())
+            binding.etAlphaNum.setText(slide.alpha.toString())
             slideAdapter.setNowSlide(slide)
         }
 
