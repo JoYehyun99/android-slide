@@ -1,6 +1,5 @@
 package com.example.slideapp
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -75,6 +74,5 @@ class SlideViewModel() : ViewModel() {
 
     fun addNewSlideFromServer() {
         slideManager.addSlideFromServer(this)
-        Log.d("getData",slideList.value.toString())
     }
 }

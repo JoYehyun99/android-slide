@@ -1,9 +1,14 @@
 package com.example.slideapp
 
-class ImageSlideFactory(): SlideItemFactory {
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+
+class ImageSlideFactory() : SlideItemFactory {
     override val check: MutableSet<String> = mutableSetOf()
     override fun createSlide(alpha: Int): Slide {
-        return ImageSlide(getRandomId(),alpha,null)
+        return ImageSlide(getRandomId(), alpha, null)
     }
 
     override fun getRandomId(): String {
@@ -16,7 +21,25 @@ class ImageSlideFactory(): SlideItemFactory {
         return result
     }
 
-    fun createCustomSlide(id: String, alpha: Int, imgUrl: ByteArray): ImageSlide{
-        return ImageSlide(id,alpha,imgUrl)
+    fun createCustomSlide(id: String, alpha: Int, imgUrl: String, callback: (ImageSlide?) -> Unit) {
+        val imageData = SlideObject.getRetrofitService().getImage(imgUrl)
+        imageData.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if (response.isSuccessful) {
+                    val responseBody = response.body()
+                    responseBody?.let {
+                        val imgByte = it.bytes()
+                        val newSlide = ImageSlide(id, alpha, imgByte)
+                        callback(newSlide)
+                    }
+                } else {
+                    callback(null)
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                callback(null)
+            }
+        })
     }
 }

@@ -7,7 +7,7 @@ class SquareSlideFactory() : SlideItemFactory {
     override val check: MutableSet<String> = mutableSetOf()
     private val SIZE = 100  // 임시 사이즈
     override fun createSlide(alpha: Int): Slide {
-        return SquareSlide(getRandomId(), SIZE, alpha, getRandomColor())
+        return SquareSlide(getRandomId(), alpha, SIZE, getRandomColor())
     }
 
     override fun getRandomId(): String {
@@ -25,6 +25,6 @@ class SquareSlideFactory() : SlideItemFactory {
     }
 
     fun createCustomSlide(id: String, size: Int, alpha: Int, color: RGB): SquareSlide {
-        return SquareSlide(id, size, alpha, color)
+        return SquareSlide(id, alpha, size, color)
     }
 }

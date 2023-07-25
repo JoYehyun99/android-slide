@@ -9,11 +9,12 @@ class SlideManager {
 
     private val slideList: MutableList<Slide> = mutableListOf()
     private val squareFactory = SquareSlideFactory()
+    private val imageFactory = ImageSlideFactory()
     private val factories: List<SlideItemFactory> by lazy {
-        listOf(squareFactory, ImageSlideFactory())
+        listOf(squareFactory, imageFactory)
     }
     private val links = listOf<String>("", "")
-    private val tmp = "square-only-slides.json" // 정사각형 슬라이드 테스트용 - 임시
+    private val tmp = "image-slides.json" // 이미지 슬라이드 테스트용 - 임시
 
     private val ALPHA_DEFAULT = 10
 
@@ -102,7 +103,7 @@ class SlideManager {
         }
     }
 
-    fun addSlideFromServer(vm : SlideViewModel) {
+    fun addSlideFromServer(vm: SlideViewModel) {
         val slideData = SlideObject.getRetrofitService().getSlide(tmp)
         Log.d("getData", "add slide from server")
         slideData.enqueue(object : Callback<JsonData> {
@@ -111,21 +112,32 @@ class SlideManager {
                     Log.d("getData", "${response.body()}")
                     val slides = response.body()!!.slides
                     slides.forEach { slide ->
-                        when(slide.type){
+                        when (slide.type) {
                             "Square" -> {
                                 val color = slide.color!!
-                                val newSlide = squareFactory.createCustomSlide(slide.id, slide.size!!, slide.alpha!!, RGB(color.R, color.G, color.B))
+                                val newSlide = squareFactory.createCustomSlide(
+                                    slide.id,
+                                    slide.size!!,
+                                    slide.alpha!!,
+                                    RGB(color.R, color.G, color.B)
+                                )
                                 slideList.add(newSlide)
+                                vm.updateSlideList()
                             }
-                            "Image" -> {
 
+                            "Image" -> {
+                                imageFactory.createCustomSlide(slide.id, slide.alpha, slide.url!!) { newSlide ->
+                                    if(newSlide != null){
+                                        slideList.add(newSlide)
+                                        vm.updateSlideList()
+                                    }
+                                }
                             }
                         }
                     }
                 } else {
                     Log.d("getData", "no response")
                 }
-                vm.updateSlideList()
             }
 
             override fun onFailure(call: Call<JsonData>, t: Throwable) {
