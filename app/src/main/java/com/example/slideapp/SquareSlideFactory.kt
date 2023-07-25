@@ -5,8 +5,9 @@ import kotlin.random.Random
 class SquareSlideFactory() : SlideItemFactory {
 
     override val check: MutableSet<String> = mutableSetOf()
-    override fun createSlide(side: Int, alpha: Int): Slide {
-        return SquareSlide(getRandomId(), side, alpha,getRandomColor())
+    private val SIZE = 100  // 임시 사이즈
+    override fun createSlide(alpha: Int): Slide {
+        return SquareSlide(getRandomId(), SIZE, alpha, getRandomColor())
     }
 
     override fun getRandomId(): String {
@@ -21,5 +22,9 @@ class SquareSlideFactory() : SlideItemFactory {
 
     fun getRandomColor(): RGB {
         return RGB(Random.nextInt(256), Random.nextInt(256), Random.nextInt(256))
+    }
+
+    fun createCustomSlide(id: String, size: Int, alpha: Int, color: RGB): SquareSlide {
+        return SquareSlide(id, size, alpha, color)
     }
 }

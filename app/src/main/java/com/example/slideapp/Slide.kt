@@ -2,7 +2,6 @@ package com.example.slideapp
 
 sealed class Slide(
     open val id: String,
-    open val side: Int,
     open val alpha: Int
 ) {
 
@@ -10,10 +9,10 @@ sealed class Slide(
 
 data class SquareSlide(
     override val id: String,
-    override val side: Int,
     override val alpha: Int,
+    val side: Int,
     val color: RGB,
-) : Slide(id, side, alpha) {
+) : Slide(id, alpha) {
     private fun getAlphaString(): String {
         return when (alpha) {
             1 -> Alpha.ALPHA_1.code
@@ -39,10 +38,9 @@ data class SquareSlide(
 
 data class ImageSlide(
     override val id: String,
-    override val side: Int,
     override val alpha: Int,
     val img: ByteArray?
-) : Slide(id, side, alpha) {
+) : Slide(id, alpha) {
 
     fun getAlphaInt(): Int {
         return when (alpha) {
