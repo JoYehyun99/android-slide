@@ -57,21 +57,4 @@ data class ImageSlide(
             else -> 0
         }
     }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as ImageSlide
-
-        if (id != other.id) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = id.hashCode()
-        result = 31 * result + img.contentHashCode()
-        return result
-    }
 }
