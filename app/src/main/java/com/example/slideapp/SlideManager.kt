@@ -122,12 +122,15 @@ class SlideManager {
                             }
 
                             "Image" -> {
-                                imageFactory.createCustomSlide(slide.id, slide.alpha, slide.url!!) { newSlide ->
-                                    if(newSlide != null){
+                                imageFactory.createCustomSlide(
+                                    slide.id,
+                                    slide.alpha,
+                                    slide.url!!
+                                ) { newSlide ->
+                                    if (newSlide != null) {
                                         slideList.add(newSlide)
                                         callback(true)
-                                    }
-                                    else {
+                                    } else {
                                         callback(false)
                                     }
                                 }
