@@ -1,6 +1,7 @@
 # android-slide
 Android 학습 프로젝트 #2
 
+>
 > ## Task 1
 
 
@@ -13,7 +14,7 @@ Android 학습 프로젝트 #2
 - `getRandomId` 랜덤 ID 값 생성
 
 #### 결과 화면
-<img width="509" alt="3-1" src="https://github.com/JoYehyun99/android-slide/assets/81362348/929d0a6f-b514-4987-a26f-5b80cf9b92d3">   
+<img width="509" alt="3-1" src="https://github.com/JoYehyun99/android-slide/assets/81362348/929d0a6f-b514-4987-a26f-5b80cf9b92d3">       
 
 
 > ## Task 2
@@ -64,3 +65,39 @@ Android 학습 프로젝트 #2
 data class 변수 선언 -> `val` 사용
 
 <img width="809" alt="dragSlide" src="https://github.com/JoYehyun99/android-slide/assets/81362348/5ed87463-b195-494c-8790-3b2e11ec56ee">
+
+
+> ## Task 4
+
+#### 슬라이드 목록 설정
+- `PopupMenu` 사용하여 길게 눌렀을 때 메뉴 표시하고, 그에 맞게 순서 이동
+
+#### `Slide` 객체 수정
+- 이미지 슬라이드에서 uri를 `byteArray`로 저장하도록 설정
+
+#### 사진 불러오기 기능
+- `Phopto Picker` - `PickVisualMedia` 사용
+- `Glide` 이용하여 `byteArray` 형식으로 전환
+- `imageAlpha` 사용하여 이미지 투명도 설정
+
+#### 결과 화면
+
+![3_5](https://github.com/JoYehyun99/android-slide/assets/81362348/5b8e669b-28a1-4051-9f0e-84421f78f209)
+
+
+> ## Task 5
+
+#### JSON 데이터 가져오기
+- `Retrofit2`을 사용하여 JSON 데이터 불러오기
+- 전체적인 데이터 구조 수정
+  : `ARGB`로 `alpha` 값과 `color`값을 한번에 관리 -> `RGB`와 `alpha`값 분리하여 저장
+  : `ImageSlide` 와 `SquareSlide` 변수 재설정
+
+
+ #### Data Binding
+ - Task 5 기능까지 구현 완료 후 Data Binding을 사용하도록 전체적인 코드 수정
+
+
+#### 결과 화면
+<img width="868" alt="5" src="https://github.com/JoYehyun99/android-slide/assets/81362348/8e625446-cdac-4d1c-8ccc-afac2daf1d0d">
+
