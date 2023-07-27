@@ -13,7 +13,7 @@ class SlideManager {
     private val factories: List<SlideItemFactory> by lazy {
         listOf(squareFactory, imageFactory)
     }
-    private val links = listOf<String>("image-slides.json", "square-only-slides.json")
+    private val links = listOf("image-slides.json", "square-only-slides.json")
     private val ALPHA_DEFAULT = 10
 
     fun addSlide(): Slide {

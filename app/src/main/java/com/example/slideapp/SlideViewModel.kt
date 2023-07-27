@@ -39,12 +39,14 @@ class SlideViewModel() : ViewModel() {
     fun addOpacity() {
         if (slideManager.changeOpacity(nowSlideNum, 1)) {
             _slide.value = slideManager.getSlide(nowSlideNum)
+            updateSlideList()
         }
     }
 
     fun removeOpacity() {
         if (slideManager.changeOpacity(nowSlideNum, -1)) {
             _slide.value = slideManager.getSlide(nowSlideNum)
+            updateSlideList()
         }
     }
 
