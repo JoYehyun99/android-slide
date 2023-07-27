@@ -15,6 +15,7 @@ class SlideListAdapter(
 
     private var slideList: MutableList<Slide> = mutableListOf()
     private var nowSlide: Slide? = null
+    private var popupMenu: PopupMenu? = null
 
     fun setSlideList(itemList: List<Slide>) {
         slideList = itemList.toMutableList()
@@ -60,22 +61,32 @@ class SlideListAdapter(
         }
     }
 
-    override fun onItemMove(from: Int, to: Int) {
+    override fun onItemMove(from: Int, to: Int) { // 4 -> 0
         if (from != to && to < slideList.size && to > -1) {
             val slideItem = slideList[from]
             slideList.removeAt(from)
             slideList.add(to, slideItem)
             notifyItemMoved(from, to)
-            notifyItemChanged(to)
-            notifyItemChanged(from)
+            if(from < to){
+                for (i in from .. to){
+                    notifyItemChanged(i)
+                }
+            } else {
+                for (i in to .. from){
+                    notifyItemChanged(i)
+                }
+            }
             model.changeOrder(from, to)
         }
     }
 
     private fun showMenu(view: View, position: Int) {
-        val popupMenu = PopupMenu(view.context, view)
-        popupMenu.menuInflater.inflate(R.menu.menu_option, popupMenu.menu)
-        popupMenu.setOnMenuItemClickListener { item ->
+        if (popupMenu == null) {
+            popupMenu = PopupMenu(view.context, view)
+            popupMenu?.menuInflater?.inflate(R.menu.menu_option, popupMenu?.menu)
+
+        }
+        popupMenu?.setOnMenuItemClickListener { item ->
             when (item.itemId) {
                 R.id.menu_send_to_back -> {
                     onItemMove(position, (slideList.size - 1))
@@ -95,6 +106,6 @@ class SlideListAdapter(
             }
             true
         }
-        popupMenu.show()
+        popupMenu?.show()
     }
 }

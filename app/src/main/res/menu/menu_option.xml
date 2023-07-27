@@ -2,14 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/menu_send_to_back"
-        android:title="맨 뒤로 보내기" />
+        android:title="@string/send_to_back" />
     <item
         android:id="@+id/menu_send_backward"
-        android:title="뒤로 보내기" />
+        android:title="@string/send_backward" />
     <item
         android:id="@+id/menu_send_forward"
-        android:title="앞으로 보내기" />
+        android:title="@string/send_forward" />
     <item
         android:id="@+id/menu_send_to_front"
-        android:title="맨 앞으로 보내기" />
+        android:title="@string/send_to_front" />
 </menu>

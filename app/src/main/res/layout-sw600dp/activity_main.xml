@@ -36,31 +36,21 @@
             app:layout_constraintGuide_percent="0.83" />
 
 
-        <androidx.core.widget.NestedScrollView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_left"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:orientation="vertical"
             android:background="@color/side_bgr"
+            app:context="@{myActivity}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toTopOf="@id/btn_slide_plus"
             app:layout_constraintEnd_toStartOf="@id/gl_left"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_left"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:context="@{myActivity}"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:listData="@{myViewModel.slideList}"
-                    app:model="@{myViewModel}"
-                    app:nowSlide="@{myViewModel.slide}" />
-            </LinearLayout>
-
-        </androidx.core.widget.NestedScrollView>
+            app:layout_constraintTop_toTopOf="parent"
+            app:listData="@{myViewModel.slideList}"
+            app:model="@{myViewModel}"
+            app:nowSlide="@{myViewModel.slide}" />
 
 
         <View
