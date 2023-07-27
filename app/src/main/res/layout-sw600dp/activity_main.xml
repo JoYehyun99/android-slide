@@ -52,7 +52,12 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_left"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    app:context="@{myActivity}"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:listData="@{myViewModel.slideList}"
+                    app:model="@{myViewModel}"
+                    app:nowSlide="@{myViewModel.slide}" />
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>

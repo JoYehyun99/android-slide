@@ -18,7 +18,6 @@ class SlideListAdapter(
 
     fun setSlideList(itemList: List<Slide>) {
         slideList = itemList.toMutableList()
-        notifyDataSetChanged()
     }
 
     fun setNowSlide(slide: Slide) {
@@ -44,40 +43,25 @@ class SlideListAdapter(
     }
 
     override fun onBindViewHolder(holder: SlideListViewHolder, position: Int) {
-        val slideItem = slideList[position]
-
-        holder.idxText.text = (position + 1).toString()
-        when (slideItem) {
-            is SquareSlide -> {
-                holder.imgIcon.setImageResource(R.drawable.baseline_fit_screen_24)
-            }
-
-            is ImageSlide -> {
-                holder.imgIcon.setImageResource(R.drawable.baseline_photo_24)
-            }
-        }
-        holder.itemView.setOnClickListener {
-            listener.showSlide(slideItem, position)
-        }
-        holder.itemView.setOnLongClickListener {
-            showMenu(it, position)
-            true
-        }
-        if (nowSlide?.id == slideItem.id) {
-            holder.itemView.setBackgroundResource(R.color.selected_bgr)
-        } else {
-            holder.itemView.setBackgroundResource(R.color.white)
-        }
+        holder.bind(slideList[position], position)
     }
 
-    inner class SlideListViewHolder(binding: SlideItemBinding) :
+    inner class SlideListViewHolder(private val binding: SlideItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        val idxText = binding.tvIdx
-        val imgIcon = binding.ivSlideIcon
+        fun bind(item: Slide, index: Int) {
+            binding.slideItem = item
+            binding.idx = index
+            binding.clickListener = listener
+            binding.longClickListener = View.OnLongClickListener {
+                showMenu(it, index)
+                true
+            }
+            binding.nowSlide = nowSlide
+        }
     }
 
     override fun onItemMove(from: Int, to: Int) {
-        if(from != to && to < slideList.size && to > -1){
+        if (from != to && to < slideList.size && to > -1) {
             val slideItem = slideList[from]
             slideList.removeAt(from)
             slideList.add(to, slideItem)
@@ -98,11 +82,11 @@ class SlideListAdapter(
                 }
 
                 R.id.menu_send_backward -> {
-                    onItemMove(position,(position+1))
+                    onItemMove(position, (position + 1))
                 }
 
                 R.id.menu_send_forward -> {
-                    onItemMove(position,(position-1))
+                    onItemMove(position, (position - 1))
                 }
 
                 R.id.menu_send_to_front -> {
