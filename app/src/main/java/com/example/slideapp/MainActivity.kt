@@ -1,17 +1,14 @@
 package com.example.slideapp
 
 import android.graphics.Bitmap
-import android.graphics.Color
 import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MotionEvent
-import android.view.View
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
@@ -21,12 +18,7 @@ import java.io.ByteArrayOutputStream
 class MainActivity : AppCompatActivity(), OnSlideItemTouchListener {
 
     private lateinit var model: SlideViewModel
-    private val binding by lazy {
-        ActivityMainBinding.inflate(layoutInflater)
-    }
-    private val slideAdapter by lazy {
-        SlideListAdapter(model, this@MainActivity)
-    }
+    private lateinit var binding: ActivityMainBinding
     private var lastClickTime: Long = 0
     private val doubleClickTimeLimit: Long = 1000
     private val pickMedia =
@@ -51,22 +43,13 @@ class MainActivity : AppCompatActivity(), OnSlideItemTouchListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setContentView(binding.root)
+
         model = ViewModelProvider(this)[SlideViewModel::class.java]
-        val itemTouchHelper = ItemTouchHelper(ItemTouchCallback(slideAdapter))
-
-        binding.rvLeft.adapter = slideAdapter
-        binding.rvLeft.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        binding.rvLeft.addItemDecoration(SlideItemDecoration())
-        itemTouchHelper.attachToRecyclerView(binding.rvLeft)
-        observeData()
-
-        binding.ivSquare.setOnTouchListener { _, event ->
-            binding.ivSquare.setImageResource(R.drawable.shape_borderline)
-            model.setSelected(true)
-            true
-        }
+        binding.myViewModel = model
+        binding.myActivity = this
+        binding.lifecycleOwner = this
 
         binding.ivImage.setOnTouchListener { _, event ->
             binding.ivImage.setBackgroundResource(R.drawable.shape_borderline)
@@ -80,69 +63,6 @@ class MainActivity : AppCompatActivity(), OnSlideItemTouchListener {
                 lastClickTime = currentTime
             }
             true
-        }
-
-        binding.vSlide.setOnClickListener {
-            binding.ivSquare.setImageResource(0)
-            binding.ivImage.setBackgroundResource(0)
-            model.setSelected(false)
-        }
-        binding.btnBackgroundColor.setOnClickListener {
-            model.changeBackgroundColor()
-        }
-        binding.btnAlphaMinus.setOnClickListener {
-            model.removeOpacity()
-        }
-        binding.btnAlphaPlus.setOnClickListener {
-            model.addOpacity()
-        }
-        binding.btnSlidePlus.setOnClickListener {
-            model.addNewSlide()
-        }
-        binding.btnSlidePlus.setOnLongClickListener {
-            model.addNewSlideFromServer()
-            true
-        }
-    }
-
-    private fun observeData() {
-
-        model.slide.observe(this) { slide ->
-            when (slide) {
-                is ImageSlide -> {
-                    binding.ivSquare.visibility = View.INVISIBLE
-                    binding.ivImage.visibility = View.VISIBLE
-                    binding.btnBackgroundColor.setBackgroundColor(resources.getColor(R.color.white))
-                    binding.btnBackgroundColor.text = ""
-                    if (slide.img == null) {
-                        binding.ivImage.setImageResource(R.drawable.baseline_image_search_24)
-                    } else {
-                        val byteArray = slide.img
-                        Glide.with(this).load(byteArray).into(binding.ivImage)
-                        binding.ivImage.imageAlpha = slide.getAlphaInt()
-                    }
-                }
-
-                is SquareSlide -> {
-                    binding.ivSquare.visibility = View.VISIBLE
-                    binding.ivImage.visibility = View.INVISIBLE
-                    binding.ivSquare.setBackgroundColor(Color.parseColor(slide.getHexColor()))
-                    binding.btnBackgroundColor.setBackgroundColor(Color.parseColor(slide.color.getHexRGBColor()))
-                    binding.btnBackgroundColor.text = slide.color.getHexRGBColor()
-                }
-            }
-            binding.etAlphaNum.setText(slide.alpha.toString())
-            slideAdapter.setNowSlide(slide)
-        }
-
-        model.isSelected.observe(this) {
-            binding.btnBackgroundColor.isEnabled = it
-            binding.btnAlphaMinus.isEnabled = it
-            binding.btnAlphaPlus.isEnabled = it
-        }
-
-        model.slideList.observe(this) { slideList ->
-            slideAdapter.setSlideList(slideList)
         }
     }
 

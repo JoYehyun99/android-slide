@@ -2,6 +2,7 @@ package com.example.slideapp
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -24,6 +25,10 @@ class SlideViewModel() : ViewModel() {
         MutableLiveData<List<Slide>>(slideManager.getSlideList())
     }
     val slideList: LiveData<List<Slide>> = _slideList
+    val isImageSlide: LiveData<Boolean> = Transformations.map(slide) { slide ->
+        slide is ImageSlide
+    }
+
     private val viewModelScope = CoroutineScope(Dispatchers.Main)
 
     fun changeBackgroundColor() {
@@ -76,11 +81,14 @@ class SlideViewModel() : ViewModel() {
         }
     }
 
-    fun addNewSlideFromServer() {
+    fun addNewSlideFromServer(): Boolean {
         viewModelScope.launch {
             slideManager.addSlideFromServer() { result ->
-                if(result) updateSlideList()
+                if (result) {
+                    updateSlideList()
+                }
             }
         }
+        return true
     }
 }
