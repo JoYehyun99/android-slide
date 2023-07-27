@@ -24,6 +24,7 @@ class SlideViewModel() : ViewModel() {
 
     fun changeBackgroundColor() {
         _slide.value = slideManager.changeBackgroundColor(nowSlideNum)
+        _slideList.value = slideManager.getSlideList()
     }
 
     fun addOpacity() {
@@ -42,7 +43,7 @@ class SlideViewModel() : ViewModel() {
         _isSelected.value = selected
     }
 
-    fun updateSlideList() {
+    private fun updateSlideList() {
         _slideList.value = slideManager.getSlideList()
     }
 
@@ -50,16 +51,24 @@ class SlideViewModel() : ViewModel() {
         val newSlide = slideManager.addSlide()
         updateSlideList()
         _slide.value = newSlide
-
     }
 
     fun switchTurn(position: Int) {
         val newTurn = slideManager.getSlide(position)
+        nowSlideNum = position
         _slide.value = newTurn
     }
 
     fun changeOrder(from: Int, to: Int) {
         val newOrder = slideManager.changeSlideOrder(from, to)
         _slideList.value = newOrder
+    }
+
+    fun changeImage(imageUri: ByteArray) {
+        val newImage = slideManager.changeImage(nowSlideNum, imageUri)
+        if (newImage != null) {
+            updateSlideList()
+            _slide.value = newImage
+        }
     }
 }

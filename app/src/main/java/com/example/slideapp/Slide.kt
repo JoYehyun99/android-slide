@@ -15,6 +15,24 @@ sealed class Slide(
         override val id: String,
         override val side: Int,
         override val color: ARGB,
-        val img: String?
-    ) : Slide(id, side, color)
+        val img: ByteArray?
+    ) : Slide(id, side, color) {
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) return true
+            if (javaClass != other?.javaClass) return false
+
+            other as ImageSlide
+
+            if (id != other.id) return false
+
+            return true
+        }
+
+        override fun hashCode(): Int {
+            var result = id.hashCode()
+            result = 31 * result + img.contentHashCode()
+            return result
+        }
+    }
 }
