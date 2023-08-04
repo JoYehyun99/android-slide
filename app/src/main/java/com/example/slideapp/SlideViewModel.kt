@@ -2,7 +2,11 @@ package com.example.slideapp
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class SlideViewModel() : ViewModel() {
 
@@ -21,6 +25,11 @@ class SlideViewModel() : ViewModel() {
         MutableLiveData<List<Slide>>(slideManager.getSlideList())
     }
     val slideList: LiveData<List<Slide>> = _slideList
+    val isImageSlide: LiveData<Boolean> = Transformations.map(slide) { slide ->
+        slide is ImageSlide
+    }
+
+    private val viewModelScope = CoroutineScope(Dispatchers.Main)
 
     fun changeBackgroundColor() {
         _slide.value = slideManager.changeBackgroundColor(nowSlideNum)
@@ -30,12 +39,14 @@ class SlideViewModel() : ViewModel() {
     fun addOpacity() {
         if (slideManager.changeOpacity(nowSlideNum, 1)) {
             _slide.value = slideManager.getSlide(nowSlideNum)
+            updateSlideList()
         }
     }
 
     fun removeOpacity() {
         if (slideManager.changeOpacity(nowSlideNum, -1)) {
             _slide.value = slideManager.getSlide(nowSlideNum)
+            updateSlideList()
         }
     }
 
@@ -70,5 +81,16 @@ class SlideViewModel() : ViewModel() {
             updateSlideList()
             _slide.value = newImage
         }
+    }
+
+    fun addNewSlideFromServer(): Boolean {
+        viewModelScope.launch {
+            slideManager.addSlideFromServer() { result ->
+                if (result) {
+                    updateSlideList()
+                }
+            }
+        }
+        return true
     }
 }

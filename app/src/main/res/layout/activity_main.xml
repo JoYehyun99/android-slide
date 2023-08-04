@@ -1,192 +1,228 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/whole_bgr">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/gl_left"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.17" />
+    <data>
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/gl_right"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.83" />
+        <import type="android.view.View" />
+
+        <variable
+            name="myActivity"
+            type="com.example.slideapp.MainActivity" />
+
+        <variable
+            name="myViewModel"
+            type="com.example.slideapp.SlideViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/whole_bgr">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.17" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.83" />
 
 
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@color/side_bgr"
-        app:layout_constraintBottom_toTopOf="@id/btn_slide_plus"
-        app:layout_constraintEnd_toStartOf="@id/gl_left"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/side_bgr"
+            app:layout_constraintBottom_toTopOf="@id/btn_slide_plus"
+            app:layout_constraintEnd_toStartOf="@id/gl_left"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_left"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent">
 
-        </LinearLayout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_left"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:context="@{myActivity}"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:listData="@{myViewModel.slideList}"
+                    app:model="@{myViewModel}"
+                    app:nowSlide="@{myViewModel.slide}" />
+            </LinearLayout>
 
-    </androidx.core.widget.NestedScrollView>
-
-
-    <View
-        android:id="@+id/v_right"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@color/side_bgr"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/gl_right"
-        app:layout_constraintTop_toTopOf="parent" />
+        </androidx.core.widget.NestedScrollView>
 
 
-    <View
-        android:id="@+id/v_slide"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="4:3"
-        app:layout_constraintEnd_toStartOf="@id/gl_right"
-        app:layout_constraintStart_toStartOf="@id/gl_left"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tv_background_color"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/bgr_title"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/gl_right"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/btn_background_color"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:textAllCaps="true"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        app:cornerRadius="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/gl_right"
-        app:layout_constraintTop_toBottomOf="@id/tv_background_color"
-        tools:text="color" />
-
-    <TextView
-        android:id="@+id/tv_alpha"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/opacity_title"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/gl_right"
-        app:layout_constraintTop_toBottomOf="@id/btn_background_color" />
-
-    <EditText
-        android:id="@+id/et_alpha_num"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/shape_round_rectangle"
-        android:ems="4"
-        android:inputType="number"
-        android:padding="12dp"
-        android:text="10"
-        android:textAlignment="viewEnd"
-        app:layout_constraintStart_toStartOf="@id/gl_right"
-        app:layout_constraintTop_toBottomOf="@id/tv_alpha" />
+        <View
+            android:id="@+id/v_right"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/side_bgr"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/gl_right"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
-    <ImageButton
-        android:id="@+id/btn_alpha_minus"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:backgroundTint="@color/alpha_btn_bgr"
-        app:layout_constraintBottom_toBottomOf="@id/et_alpha_num"
-        app:layout_constraintEnd_toStartOf="@id/btn_alpha_plus"
-        app:layout_constraintStart_toEndOf="@+id/et_alpha_num"
-        app:layout_constraintTop_toTopOf="@id/et_alpha_num"
-        app:srcCompat="@drawable/baseline_remove_24" />
+        <View
+            android:id="@+id/v_slide"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/white"
+            android:onClick="@{() -> myViewModel.setSelected(false)}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="4:3"
+            app:layout_constraintEnd_toStartOf="@id/gl_right"
+            app:layout_constraintStart_toStartOf="@id/gl_left"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_background_color"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/bgr_title"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/gl_right"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btn_background_color"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:enabled="@{myViewModel.isSelected}"
+            android:onClick="@{() -> myViewModel.changeBackgroundColor()}"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            app:bgrBtn="@{myViewModel.slide}"
+            app:cornerRadius="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/gl_right"
+            app:layout_constraintTop_toBottomOf="@id/tv_background_color" />
+
+        <TextView
+            android:id="@+id/tv_alpha"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/opacity_title"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/gl_right"
+            app:layout_constraintTop_toBottomOf="@id/btn_background_color" />
+
+        <EditText
+            android:id="@+id/et_alpha_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/shape_round_rectangle"
+            android:ems="4"
+            android:inputType="number"
+            android:padding="12dp"
+            android:text="@{String.valueOf(myViewModel.slide.alpha)}"
+            android:textAlignment="viewEnd"
+            app:layout_constraintStart_toStartOf="@id/gl_right"
+            app:layout_constraintTop_toBottomOf="@id/tv_alpha" />
 
 
-    <ImageButton
-        android:id="@+id/btn_alpha_plus"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:backgroundTint="@color/alpha_btn_bgr"
-        app:layout_constraintBottom_toBottomOf="@id/et_alpha_num"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/btn_alpha_minus"
-        app:layout_constraintTop_toTopOf="@id/et_alpha_num"
-        app:srcCompat="@drawable/baseline_add_24" />
-
-    <ImageView
-        android:id="@+id/iv_square"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:background="@color/alpha_btn_bgr"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/gl_right"
-        app:layout_constraintStart_toStartOf="@+id/gl_left"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/iv_image"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/gl_right"
-        app:layout_constraintStart_toStartOf="@+id/gl_left"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_slide_plus"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@color/add_btn_bgr"
-        android:padding="15dp"
-        android:text="@string/plus_btn"
-        android:textColor="@color/add_btn_txt"
-        android:textSize="20sp"
-        app:cornerRadius="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/gl_left"
-        app:layout_constraintStart_toStartOf="parent" />
+        <ImageButton
+            android:id="@+id/btn_alpha_minus"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:backgroundTint="@color/alpha_btn_bgr"
+            android:enabled="@{myViewModel.isSelected}"
+            android:onClick="@{() -> myViewModel.removeOpacity()}"
+            app:layout_constraintBottom_toBottomOf="@id/et_alpha_num"
+            app:layout_constraintEnd_toStartOf="@id/btn_alpha_plus"
+            app:layout_constraintStart_toEndOf="@+id/et_alpha_num"
+            app:layout_constraintTop_toTopOf="@id/et_alpha_num"
+            app:srcCompat="@drawable/baseline_remove_24" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageButton
+            android:id="@+id/btn_alpha_plus"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:backgroundTint="@color/alpha_btn_bgr"
+            android:enabled="@{myViewModel.isSelected}"
+            android:onClick="@{() -> myViewModel.addOpacity()}"
+            app:layout_constraintBottom_toBottomOf="@id/et_alpha_num"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_alpha_minus"
+            app:layout_constraintTop_toTopOf="@id/et_alpha_num"
+            app:srcCompat="@drawable/baseline_add_24" />
+
+        <ImageView
+            android:id="@+id/iv_square"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:onClick="@{() -> myViewModel.setSelected(true)}"
+            android:visibility="@{myViewModel.isImageSlide ? View.GONE : View.VISIBLE}"
+            app:imgBgr="@{myViewModel.slide}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/gl_right"
+            app:layout_constraintStart_toStartOf="@+id/gl_left"
+            app:layout_constraintTop_toTopOf="parent"
+            app:selectedSquare="@{myViewModel.isSelected}" />
+
+        <ImageView
+            android:id="@+id/iv_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:minWidth="300dp"
+            android:onClick="@{() -> myViewModel.setSelected(true)}"
+            android:padding="3dp"
+            android:scaleType="center"
+            android:tintMode="src_atop"
+            android:visibility="@{myViewModel.isImageSlide ? View.VISIBLE : View.GONE}"
+            app:imgSrc="@{myViewModel.slide}"
+            app:layout_constraintEnd_toStartOf="@id/gl_right"
+            app:layout_constraintStart_toStartOf="@+id/gl_left"
+            app:layout_constraintTop_toTopOf="@id/v_slide"
+            app:selectedImg="@{myViewModel.isSelected}" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_slide_plus"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/add_btn_bgr"
+            android:onClick="@{()-> myViewModel.addNewSlide()}"
+            android:onLongClick="@{() -> myViewModel.addNewSlideFromServer()}"
+            android:padding="15dp"
+            android:text="@string/plus_btn"
+            android:textColor="@color/add_btn_txt"
+            android:textSize="20sp"
+            app:cornerRadius="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/gl_left"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

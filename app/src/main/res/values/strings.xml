@@ -3,4 +3,8 @@
     <string name="bgr_title">배경색</string>
     <string name="opacity_title">투명도</string>
     <string name="plus_btn">( + )</string>
+    <string name="send_to_back">맨 뒤로 보내기</string>
+    <string name="send_backward">뒤로 보내기</string>
+    <string name="send_forward">앞으로 보내기</string>
+    <string name="send_to_front">맨 앞으로 보내기</string>
 </resources>

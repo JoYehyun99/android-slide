@@ -1,7 +1,8 @@
 package com.example.slideapp
 
 interface SlideItemFactory {
-    val check: MutableSet<String>
-    fun createSlide(side: Int, color: ARGB): Slide
+
+    val duplicationCheck: MutableSet<String>
+    fun createSlide(alpha: Int): Slide
     fun getRandomId(): String
 }
