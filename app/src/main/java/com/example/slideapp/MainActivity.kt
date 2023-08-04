@@ -4,7 +4,6 @@ import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.MotionEvent
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
@@ -47,7 +46,6 @@ class MainActivity : AppCompatActivity(), OnSlideItemTouchListener {
                         val byteArray = outputStream.toByteArray()
                         model.changeImage(byteArray)
                     }
-
                     override fun onLoadCleared(placeholder: Drawable?) {
                     }
                 })
@@ -71,7 +69,6 @@ class MainActivity : AppCompatActivity(), OnSlideItemTouchListener {
 
     override fun showSlide(slide: Slide, position: Int): Boolean {
         model.switchTurn(position)
-        Log.d("slide_text","selected slide num = $position")
         return true
     }
 }
