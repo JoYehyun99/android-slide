@@ -1,6 +1,6 @@
 package com.example.slideapp
 
-import kotlin.random.Random
+import com.example.slideapp.ColorUtil.getRandomColor
 
 class SquareSlideFactory() : SlideItemFactory {
 
@@ -18,10 +18,6 @@ class SquareSlideFactory() : SlideItemFactory {
         }
         duplicationCheck.add(result)
         return result
-    }
-
-    fun getRandomColor(): RGB {
-        return RGB(Random.nextInt(256), Random.nextInt(256), Random.nextInt(256))
     }
 
     fun createCustomSlide(id: String, size: Int, alpha: Int, color: RGB): SquareSlide {
