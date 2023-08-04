@@ -13,12 +13,7 @@ Android 학습 프로젝트 #2
 - `getRandomId` 랜덤 ID 값 생성
 
 #### 결과 화면
-<<<<<<< HEAD
-<img width="509" alt="3-1" src="https://github.com/JoYehyun99/android-slide/assets/81362348/929d0a6f-b514-4987-a26f-5b80cf9b92d3">       
-=======
-
-<img width="509" alt="3-1" src="https://github.com/JoYehyun99/android-slide/assets/81362348/929d0a6f-b514-4987-a26f-5b80cf9b92d3">   
->>>>>>> JoYehyun
+<img width="509" alt="3-1" src="https://github.com/JoYehyun99/android-slide/assets/81362348/929d0a6f-b514-4987-a26f-5b80cf9b92d3">
 
 
 > ## Task 2
