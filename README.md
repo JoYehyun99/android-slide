@@ -100,3 +100,17 @@ data class 변수 선언 -> `val` 사용
 #### 결과 화면
 <img width="868" alt="5" src="https://github.com/JoYehyun99/android-slide/assets/81362348/8e625446-cdac-4d1c-8ccc-afac2daf1d0d">
 
+
+> ## Task 6
+
+#### Drawing View 구현 
+- CustomView 사용
+- 한 슬라이드 당 하나의 선만 그릴 수 있음
+- 선을 그리면 border로 표시
+
+
+#### 결과 화면
+<img width="825" alt="11" src="https://github.com/JoYehyun99/android-slide/assets/81362348/f7ceb81b-4335-4cdc-9c4b-2d94d9fa8d7b">
+
+
+
