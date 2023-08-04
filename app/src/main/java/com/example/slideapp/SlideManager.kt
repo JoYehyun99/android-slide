@@ -1,6 +1,7 @@
 package com.example.slideapp
 
 import android.util.Log
+import com.example.slideapp.ColorUtil.getRandomColor
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -10,8 +11,9 @@ class SlideManager {
     private val slideList: MutableList<Slide> = mutableListOf()
     private val squareFactory = SquareSlideFactory()
     private val imageFactory = ImageSlideFactory()
+    private val drawingFactory = DrawingSlideFactory()
     private val factories: List<SlideItemFactory> by lazy {
-        listOf(squareFactory, imageFactory)
+        listOf(squareFactory, imageFactory, drawingFactory)
     }
     private val links = listOf("image-slides.json", "square-only-slides.json")
     private val ALPHA_DEFAULT = 10
@@ -32,16 +34,21 @@ class SlideManager {
     }
 
     fun changeBackgroundColor(idx: Int): Slide {
-        return when (slideList[idx]) {
+        return when (val slideItem = slideList[idx]) {
             is SquareSlide -> {
-                val slideItem = slideList[idx] as SquareSlide
-                val newSlide = slideItem.copy(color = squareFactory.getRandomColor())
+                val newSlide = slideItem.copy(color = getRandomColor())
                 slideList[idx] = newSlide
                 newSlide
             }
 
             is ImageSlide -> {
-                slideList[idx]
+                slideItem
+            }
+
+            is DrawingSlide -> {
+                val newSlide = slideItem.copy(color = getRandomColor())
+                slideList[idx] = newSlide
+                newSlide
             }
         }
     }
@@ -74,6 +81,10 @@ class SlideManager {
                     slideList[idx] = newSlide
                     return true
                 }
+                return false
+            }
+
+            is DrawingSlide -> {
                 return false
             }
         }

@@ -1,11 +1,11 @@
 package com.example.slideapp
 
+import android.graphics.Path
+
 sealed class Slide(
     open val id: String,
     open val alpha: Int
-) {
-
-}
+)
 
 data class SquareSlide(
     override val id: String,
@@ -58,3 +58,12 @@ data class ImageSlide(
         }
     }
 }
+
+data class DrawingSlide(
+    override val id: String,
+    override val alpha: Int,
+    val color: RGB,
+    var path: Path? = null,
+    val border: Array<Float> = Array(4) { 0.0f },    // minX, maxY, maxX, minY
+    var isDrawable: Boolean = true
+) : Slide(id, alpha)
