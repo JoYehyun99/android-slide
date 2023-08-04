@@ -23,6 +23,10 @@ object BindingAdapter {
 
             is ImageSlide -> {
             }
+
+            is DrawingSlide -> {
+
+            }
         }
         if (selected) {
             view.setImageResource(R.drawable.shape_borderline)
@@ -36,9 +40,6 @@ object BindingAdapter {
     fun setImage(view: ImageView, slide: Slide, selected: Boolean) {
 
         when (slide) {
-            is SquareSlide -> {
-            }
-
             is ImageSlide -> {
                 view.setBackgroundResource(R.color.white)
                 view.imageAlpha = slide.getAlphaInt()
@@ -50,13 +51,18 @@ object BindingAdapter {
                     view.imageAlpha = slide.getAlphaInt()
                 }
             }
+
+            else -> {}
         }
-        if (selected) {
-            view.setBackgroundResource(R.drawable.shape_borderline)
-        } else {
-            view.setBackgroundResource(0)
+        if (slide !is DrawingSlide) {
+            if (selected) {
+                view.setBackgroundResource(R.drawable.shape_borderline)
+            } else {
+                view.setBackgroundResource(0)
+            }
         }
     }
+
 
     @JvmStatic
     @BindingAdapter("bgrBtn")
@@ -72,6 +78,11 @@ object BindingAdapter {
                 button.setBackgroundColor(Color.WHITE)
                 button.text = ""
             }
+
+            is DrawingSlide -> {
+                button.setBackgroundColor(Color.parseColor(slide.color.getHexRGBColor()))
+                button.text = slide.color.getHexRGBColor()
+            }
         }
     }
 
@@ -86,13 +97,17 @@ object BindingAdapter {
             is SquareSlide -> {
                 view.setImageResource(R.drawable.baseline_fit_screen_24)
             }
+
+            is DrawingSlide -> {
+                view.setImageResource(R.drawable.baseline_draw_24)
+            }
         }
     }
 
     @JvmStatic
     @BindingAdapter("slides", "slideTurn")
     fun setSlideTurn(view: View, slideItem: Slide, nowSlide: Slide) {
-        if (nowSlide?.id == slideItem.id) {
+        if (nowSlide.id == slideItem.id) {
             view.setBackgroundResource(R.color.selected_bgr)
         } else {
             view.setBackgroundResource(R.color.white)
@@ -118,6 +133,14 @@ object BindingAdapter {
         }
         (recyclerView.adapter as? SlideListAdapter)?.setSlideList(data)
         (recyclerView.adapter as? SlideListAdapter)?.setNowSlide(nowSlide)
+    }
+
+    @JvmStatic
+    @BindingAdapter("slide")
+    fun setDrawingView(view: DrawingView, slide: Slide) {
+        if (slide is DrawingSlide) {
+            view.setSlide(slide)
+        }
     }
 
 }

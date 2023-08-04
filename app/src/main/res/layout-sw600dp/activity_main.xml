@@ -5,6 +5,9 @@
     <data>
 
         <import type="android.view.View" />
+        <import type="com.example.slideapp.DrawingSlide" />
+        <import type="com.example.slideapp.SquareSlide" />
+        <import type="com.example.slideapp.ImageSlide" />
 
         <variable
             name="myActivity"
@@ -167,12 +170,24 @@
             app:layout_constraintTop_toTopOf="@id/et_alpha_num"
             app:srcCompat="@drawable/baseline_add_24" />
 
+
+        <com.example.slideapp.DrawingView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/white"
+            android:visibility="@{myViewModel.slide instanceof DrawingSlide ? View.VISIBLE : View.GONE}"
+            app:slide="@{myViewModel.slide}"
+            app:layout_constraintBottom_toBottomOf="@id/v_slide"
+            app:layout_constraintEnd_toStartOf="@id/gl_right"
+            app:layout_constraintStart_toStartOf="@id/gl_left"
+            app:layout_constraintTop_toTopOf="@id/v_slide"/>
+
         <ImageView
             android:id="@+id/iv_square"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:onClick="@{() -> myViewModel.setSelected(true)}"
-            android:visibility="@{myViewModel.isImageSlide ? View.GONE : View.VISIBLE}"
+            android:visibility="@{myViewModel.slide instanceof SquareSlide ? View.VISIBLE : View.GONE}"
             app:imgBgr="@{myViewModel.slide}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/gl_right"
@@ -190,7 +205,7 @@
             android:padding="3dp"
             android:scaleType="center"
             android:tintMode="src_atop"
-            android:visibility="@{myViewModel.isImageSlide ? View.VISIBLE : View.GONE}"
+            android:visibility="@{myViewModel.slide instanceof ImageSlide ? View.VISIBLE : View.GONE}"
             app:imgSrc="@{myViewModel.slide}"
             app:layout_constraintEnd_toStartOf="@id/gl_right"
             app:layout_constraintStart_toStartOf="@+id/gl_left"
